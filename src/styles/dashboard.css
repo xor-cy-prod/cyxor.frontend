@@ -1,0 +1,131 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------- Base Styles ---------- */
+
+@layer base {
+  body {
+    @apply bg-gray-50 text-gray-800 antialiased;
+  }
+
+  h1, h2, h3 {
+    @apply font-semibold tracking-tight;
+  }
+}
+
+/* ---------- Layout ---------- */
+
+@layer components {
+  .layout-container {
+    @apply flex h-screen bg-gray-50;
+  }
+
+  .sidebar {
+    @apply w-64 bg-white border-r border-gray-200 shadow-sm;
+  }
+
+  .sidebar-header {
+    @apply h-16 flex items-center px-6 border-b border-gray-200 text-xl font-semibold;
+  }
+
+  .sidebar-link {
+    @apply flex items-center px-4 py-2.5 rounded-lg text-sm font-medium transition-all;
+  }
+
+  .sidebar-link-active {
+    @apply bg-blue-50 text-blue-600;
+  }
+
+  .sidebar-link-inactive {
+    @apply text-gray-600 hover:bg-gray-100 hover:text-gray-900;
+  }
+
+  .topbar {
+    @apply h-16 bg-white border-b border-gray-200 flex items-center justify-between px-8;
+  }
+
+  .main-content {
+    @apply flex-1 p-8 overflow-y-auto;
+  }
+}
+
+/* ---------- Cards ---------- */
+
+@layer components {
+  .card {
+    @apply bg-white rounded-xl border border-gray-200 shadow-sm transition-all duration-200;
+  }
+
+  .card-hover {
+    @apply hover:border-blue-300 hover:shadow-md cursor-pointer;
+  }
+
+  .card-header {
+    @apply text-lg font-semibold text-gray-800 mb-3;
+  }
+
+  .card-stat-title {
+    @apply text-xs text-gray-400;
+  }
+
+  .card-stat-value {
+    @apply text-sm font-medium text-gray-800;
+  }
+}
+
+/* ---------- Buttons ---------- */
+
+@layer components {
+  .btn-primary {
+    @apply px-4 py-2 bg-blue-600 text-white text-sm rounded-lg shadow-sm hover:bg-blue-700 transition;
+  }
+
+  .btn-danger {
+    @apply px-4 py-2 bg-red-600 text-white text-sm rounded-lg hover:bg-red-700 transition;
+  }
+
+  .btn-tab {
+    @apply px-4 py-2 text-sm font-medium rounded-lg transition;
+  }
+
+  .btn-tab-active {
+    @apply bg-blue-600 text-white shadow-sm;
+  }
+
+  .btn-tab-inactive {
+    @apply bg-white border border-gray-200 text-gray-600 hover:bg-gray-50;
+  }
+}
+
+/* ---------- Status Badges ---------- */
+
+@layer components {
+  .badge {
+    @apply text-xs font-medium px-3 py-1 rounded-full;
+  }
+
+  .badge-green {
+    @apply bg-green-100 text-green-700;
+  }
+
+  .badge-yellow {
+    @apply bg-yellow-100 text-yellow-700;
+  }
+
+  .badge-red {
+    @apply bg-red-100 text-red-700;
+  }
+}
+
+/* ---------- Log Blocks ---------- */
+
+@layer components {
+  .log-box {
+    @apply p-3 bg-gray-50 rounded-md text-sm text-gray-600;
+  }
+
+  .log-critical {
+    @apply bg-red-50 text-red-700;
+  }
+}
