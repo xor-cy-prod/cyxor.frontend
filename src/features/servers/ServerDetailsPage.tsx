@@ -1,8 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useState } from "react";
 import {
-  LineChart,
-  Line,
   XAxis,
   YAxis,
   Tooltip,
@@ -17,12 +15,30 @@ type TabType = (typeof tabs)[number];
 
 const analyticsData = [
   { time: "00:00", requests: 120 },
-  { time: "04:00", requests: 200 },
-  { time: "08:00", requests: 150 },
-  { time: "12:00", requests: 300 },
-  { time: "16:00", requests: 280 },
-  { time: "20:00", requests: 350 },
-  { time: "23:00", requests: 220 },
+  { time: "01:00", requests: 200 },
+  { time: "02:00", requests: 150 },
+  { time: "03:00", requests: 300 },
+  { time: "04:00", requests: 280 },
+  { time: "05:00", requests: 200 },
+  { time: "06:00", requests: 150 },
+  { time: "07:00", requests: 300 },
+  { time: "08:00", requests: 280 },
+  { time: "09:00", requests: 350 },
+  { time: "10:00", requests: 220 },
+  { time: "11:00", requests: 200 },
+  { time: "12:00", requests: 150 },
+  { time: "13:00", requests: 300 },
+  { time: "14:00", requests: 280 },
+  { time: "15:00", requests: 200 },
+  { time: "16:00", requests: 150 },
+  { time: "17:00", requests: 300 },
+  { time: "18:00", requests: 280 },
+  { time: "19:00", requests: 350 },
+  { time: "20:00", requests: 120 },
+  { time: "21:00", requests: 200 },
+  { time: "22:00", requests: 150 },
+  { time: "23:00", requests: 300 },
+  { time: "24:00", requests: 280 },
 ];
 
 export default function ServerDetailsPage() {
