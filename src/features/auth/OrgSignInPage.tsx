@@ -1,9 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { apiClient } from "../../lib/apiClient";
+import { useAuthStore } from "../../stores/authStore";
 
 export default function OrgSignInPage() {
   const navigate = useNavigate();
-  const [orgSlug, setOrgSlug] = useState("");
+  const setAuth = useAuthStore((s) => s.setAuth);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -13,18 +17,27 @@ export default function OrgSignInPage() {
     e.preventDefault();
     setError(null);
 
-    if (!orgSlug.trim() || !email.trim() || !password.trim()) {
-      setError("All fields are required.");
+    if (!email.trim() || !password.trim()) {
+      setError("Email and password are required.");
       return;
     }
 
     setIsLoading(true);
 
-    // Simulate auth — replace with real API call
-    await new Promise((res) => setTimeout(res, 1000));
-
-    setIsLoading(false);
-    navigate("/servers");
+    try {
+      const res = await apiClient.post("/auth/login", { email, password });
+      const { access_token, customer } = res.data;
+      setAuth(access_token, customer);
+      navigate("/servers");
+    } catch (err) {
+      if (axios.isAxiosError(err) && err.response) {
+        setError(err.response.data?.detail ?? "Login failed. Please try again.");
+      } else {
+        setError("Unable to reach the server. Please try again.");
+      }
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -59,7 +72,7 @@ export default function OrgSignInPage() {
             Sign in to your organization
           </h1>
           <p className="text-sm text-slate-400 mt-2">
-            Enter your organization details to access the dashboard
+            Enter your credentials to access the dashboard
           </p>
         </div>
 
@@ -67,27 +80,6 @@ export default function OrgSignInPage() {
         <div className="bg-[#071426] border border-slate-800 rounded-2xl p-8 shadow-2xl shadow-black/40">
 
           <form onSubmit={handleSubmit} className="space-y-5">
-
-            {/* Organization Slug */}
-            <div className="space-y-1.5">
-              <label className="block text-xs font-medium text-slate-400 uppercase tracking-wider">
-                Organization
-              </label>
-              <div className="flex items-center bg-[#0a1628] border border-slate-700 rounded-lg overflow-hidden focus-within:border-blue-500 transition-colors">
-                <span className="pl-4 pr-2 text-slate-500 text-sm select-none">
-                  cyxor.io /
-                </span>
-                <input
-                  id="org-slug"
-                  type="text"
-                  value={orgSlug}
-                  onChange={(e) => setOrgSlug(e.target.value)}
-                  placeholder="your-org"
-                  className="flex-1 bg-transparent py-3 pr-4 text-sm text-slate-100 placeholder-slate-600 outline-none"
-                  autoComplete="organization"
-                />
-              </div>
-            </div>
 
             {/* Email */}
             <div className="space-y-1.5">
@@ -145,24 +137,9 @@ export default function OrgSignInPage() {
             >
               {isLoading ? (
                 <>
-                  <svg
-                    className="animate-spin w-4 h-4"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <circle
-                      className="opacity-25"
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                    />
-                    <path
-                      className="opacity-75"
-                      fill="currentColor"
-                      d="M4 12a8 8 0 018-8v8H4z"
-                    />
+                  <svg className="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
                   </svg>
                   Signing in…
                 </>
