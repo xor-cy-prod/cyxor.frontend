@@ -8,8 +8,8 @@ import {
   CartesianGrid,
   AreaChart,
   Area,
-  BarChart,
-  Bar,
+  // BarChart,
+  // Bar,
 } from "recharts";
 
 const tabs = ["Logs", "AI Logs", "Alerts", "Analytics"] as const;
